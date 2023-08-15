@@ -1,8 +1,10 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +13,9 @@ namespace DataAccess.Concrete.InMemory
     public class InMemoryProductDal : IProductDal
     {
         List<Product> _products; // Global değişkenler _ ile başlar
+        // Constructor
+        // Bellekte referans aldığı zaman çalışacak blok
+        // Bir ürün listesi oluşturuyoruz
         public InMemoryProductDal()
         {
             // Oracle, Sql Server, Postgres, MongoDb
@@ -23,6 +28,7 @@ namespace DataAccess.Concrete.InMemory
                 new Product{ProductId=5, CategoryId=2, ProductName="Fare", UnitPrice=85, UnitsInStock=1}
             };
         }
+   
         public void Add(Product product)
         {
             _products.Add(product);
@@ -63,5 +69,19 @@ namespace DataAccess.Concrete.InMemory
             // Where koşulu içindeki şarta uyan bütün elemanları yeni bir liste haline getirir ve onu döndürür.
         }
 
+        public List<ProductDetailDto> GetProductDetails()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Product Get(Expression<Func<Product, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
