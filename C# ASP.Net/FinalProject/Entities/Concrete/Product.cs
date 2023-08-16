@@ -15,7 +15,7 @@ namespace Entities.Concrete
 
         public short UnitsInStock { get; set; }
         public int CategoryId { get; set; }
-        public decimal UnitPrice { get; set; }
+        public decimal UnitPrice { get; set; }    //decimal veri tipi daha hassas
 
     }
 }
