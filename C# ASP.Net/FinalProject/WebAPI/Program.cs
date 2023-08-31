@@ -23,7 +23,6 @@ namespace WebAPI
             //builder.Services. diye yazacaz buraya
             builder.Services.AddSingleton<IProductService, ProductManager>(); // IProductService'i ProductManager'a baðla
             builder.Services.AddSingleton<IProductDal, EfProductDal>(); // IProductDal'ý EfProductDal'a baðla
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

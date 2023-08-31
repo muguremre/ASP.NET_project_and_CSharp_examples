@@ -17,17 +17,25 @@ namespace WebAPI.Controllers
         //injection
         // IoC Container -- Inversion of Control -- Değişimin kontrolü
         public ProductsController(IProductService productService)
-        { 
-           _productService = productService;
+        {
+            _productService = productService;
 
         }
-        [HttpGet]
-        public List<Product> Get()
+        [HttpGet("getall")]
+        public IActionResult Get()
         {
             // Dependency chain -- bağımlılık zinciri
-             // EfProductDal'ı new'ledik
+            // EfProductDal'ı new'ledik
             var result = _productService.GetAll(); // GetAll'ı çağırdık
-           return result.Data; // Data'yı döndürdük
+
+            if (result.Success)
+            {
+                return Ok(result); // 200
+            }
+            return BadRequest(result); // 400
+
+
+            // Data'yı döndürdük
         }
         //public string Get()
         //{
@@ -35,5 +43,28 @@ namespace WebAPI.Controllers
 
         //    return result.Message;
         //}
+
+        [HttpPost("add")]
+        public IActionResult Post(Product product)
+        {
+            var result = _productService.Add(product);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("getbyid")]
+        
+        public IActionResult GetById(int id)
+        {
+            var result = _productService.GetById(id);
+            if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
     }
 }
