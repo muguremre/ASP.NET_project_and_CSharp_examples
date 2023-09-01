@@ -1,5 +1,8 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.Concrete;
+using Business.DependencyResolvers.Autofac;
 using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 
@@ -12,7 +15,12 @@ namespace WebAPI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory()); // Autofac kullanacaðýmýzý belirttik
 
+            builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+            {
+                builder.RegisterModule(new AutofacBusinessModule()); // AutofacBusinessModule'ü ekledik
+            });
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -21,8 +29,8 @@ namespace WebAPI
             builder.Services.AddSwaggerGen();
 
             //builder.Services. diye yazacaz buraya
-            builder.Services.AddSingleton<IProductService, ProductManager>(); // IProductService'i ProductManager'a baðla
-            builder.Services.AddSingleton<IProductDal, EfProductDal>(); // IProductDal'ý EfProductDal'a baðla
+            //builder.Services.AddSingleton<IProductService, ProductManager>(); // IProductService'i ProductManager'a baðla
+            //builder.Services.AddSingleton<IProductDal, EfProductDal>(); // IProductDal'ý EfProductDal'a baðla
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
